@@ -28,10 +28,15 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-3">
-          <span className="font-display text-2xl tracking-tight text-indigo-deep">Garg Tours</span>
-          <span className="hidden border border-brass/40 px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-brass sm:block">
-            Rajasthan Tours
-          </span>
+         
+          <a href="/" className="logo" aria-label="Home">
+            <img
+              src="/favicon.png"
+              alt="Garg Tours Logo"
+              className="navbar-logo"
+
+            />
+          </a>
         </Link>
 
         <nav className="hidden items-center gap-7 text-sm font-medium text-ink/80 md:flex">

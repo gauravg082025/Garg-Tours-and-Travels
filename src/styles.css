@@ -308,3 +308,26 @@
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
   .airplane-cursor, .airplane-burst { display: none !important; }
 }
+
+
+.navbar-logo {
+  display: block;
+  width: 300px;
+  height: 100px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar-logo {
+    width: 140px;
+    height: 65px;
+  }
+}
