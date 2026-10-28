@@ -1,3 +1,4 @@
+import PlaneReveal from "@/components/plane-reveal";
 import {
   Outlet,
   Link,
@@ -77,6 +78,7 @@ function RootComponent() {
       <AirplaneCursor />
       <SiteHeader />
       <main className="flex-1">
+        <PlaneReveal/>
         <Outlet />
       </main>
       <SiteFooter />
