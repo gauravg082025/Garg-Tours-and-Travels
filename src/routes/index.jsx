@@ -177,7 +177,7 @@ function Home() {
           <Reveal>
             <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.2em] text-brass">Where</p>
             <h2 className="mb-8 text-balance text-3xl leading-tight text-ink sm:text-4xl">
-              Five cities, one thread
+              Four cities, one thread
             </h2>
           </Reveal>
           <div className="grid auto-rows-[160px] grid-cols-2 gap-3 md:auto-rows-[190px] md:grid-cols-4">
