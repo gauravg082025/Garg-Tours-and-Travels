@@ -5,21 +5,17 @@ export function AirplaneCursor() {
   const planeRef = useRef(null);
 
   useEffect(() => {
-    // Touch devices par custom cursor nahi chalega
-    if (!window.matchMedia("(pointer: fine)").matches) {
-      return;
-    }
-
     const plane = planeRef.current;
     if (!plane) return;
 
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
     let previousX = 0;
     let previousY = 0;
     let hasPreviousPosition = false;
 
+    // Move the airplane with the mouse on desktop.
     const handleMouseMove = (event) => {
-      const x = event.clientX;
-      const y = event.clientY;
+      const { clientX: x, clientY: y } = event;
 
       if (hasPreviousPosition) {
         const dx = x - previousX;
@@ -29,10 +25,7 @@ export function AirplaneCursor() {
           const angle =
             Math.atan2(dy, dx) * (180 / Math.PI) - 45;
 
-          plane.style.setProperty(
-            "--plane-angle",
-            `${angle}deg`
-          );
+          plane.style.setProperty("--plane-angle", `${angle}deg`);
         }
       }
 
@@ -42,41 +35,75 @@ export function AirplaneCursor() {
 
       plane.style.left = `${x}px`;
       plane.style.top = `${y}px`;
-      plane.style.opacity = "1";
+      plane.classList.add("is-visible");
     };
+
+    // Create the airplane shower at the clicked position.
+    const handleClick = (event) => {
+      if (
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches
+      ) {
+        return;
+      }
+
+      const burst = document.createElement("div");
+      burst.className = "airplane-burst";
+
+      burst.style.left = `${event.clientX}px`;
+      burst.style.top = `${event.clientY}px`;
+
+      // Gold and blue particles.
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement("span");
+        particle.className = `airplane-particle particle-${i}`;
+        particle.textContent = i % 2 === 0 ? "✦" : "✧";
+        burst.appendChild(particle);
+      }
+
+      // Extra sparkles around the click.
+      ["spark-one", "spark-two"].forEach((className) => {
+        const spark = document.createElement("span");
+        spark.className = `airplane-spark ${className}`;
+        spark.textContent = "✧";
+        burst.appendChild(spark);
+      });
+
+      document.body.appendChild(burst);
+
+      // Remove the animation after it finishes.
+      window.setTimeout(() => burst.remove(), 1000);
+    };
+
+    if (finePointer) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
+
+    // Click effect works with a mouse or touchscreen.
+    window.addEventListener("click", handleClick);
 
     const handleMouseLeave = () => {
-      plane.style.opacity = "0";
+      plane.classList.remove("is-visible");
     };
 
-    const handleMouseEnter = () => {
-      plane.style.opacity = "1";
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    document.documentElement.addEventListener(
-      "mouseleave",
-      handleMouseLeave
-    );
-
-    document.documentElement.addEventListener(
-      "mouseenter",
-      handleMouseEnter
-    );
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-
-      document.documentElement.removeEventListener(
+    if (finePointer) {
+      document.documentElement.addEventListener(
         "mouseleave",
         handleMouseLeave
       );
+    }
 
-      document.documentElement.removeEventListener(
-        "mouseenter",
-        handleMouseEnter
-      );
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleClick);
+
+      if (finePointer) {
+        document.documentElement.removeEventListener(
+          "mouseleave",
+          handleMouseLeave
+        );
+      }
     };
   }, []);
 
@@ -84,16 +111,9 @@ export function AirplaneCursor() {
     <div
       ref={planeRef}
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[9999] select-none text-3xl"
-      style={{
-        opacity: 0,
-        transform:
-          "translate(-50%, -50%) rotate(var(--plane-angle, 0deg))",
-        transition:
-          "left 80ms linear, top 80ms linear, transform 100ms ease-out, opacity 150ms ease",
-      }}
+      className="airplane-cursor pointer-events-none"
     >
-      ✈️
+      <span>✈</span>
     </div>
   );
 }

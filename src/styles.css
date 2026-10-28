@@ -305,8 +305,17 @@
   25% { opacity: 1; }
   100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(1.5) rotate(80deg); }
 }
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .airplane-cursor, .airplane-burst { display: none !important; }
+@media (hover: none), (pointer: coarse) {
+  .airplane-cursor {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .airplane-cursor,
+  .airplane-burst {
+    display: none !important;
+  }
 }
 
 
