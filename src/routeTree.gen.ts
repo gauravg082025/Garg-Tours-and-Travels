@@ -14,6 +14,8 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as ToursRouteImport } from './routes/tours'
+import { Route as TripPlannerRouteImport } from './routes/trip-planner'
+import { Route as TripQuizRouteImport } from './routes/trip-quiz'
 import { Route as ToursIndexRouteImport } from './routes/tours.index'
 import { Route as ToursSlugRouteImport } from './routes/tours.$slug'
 
@@ -42,6 +44,16 @@ const ToursRoute = ToursRouteImport.update({
   path: '/tours',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TripPlannerRoute = TripPlannerRouteImport.update({
+  id: '/trip-planner',
+  path: '/trip-planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripQuizRoute = TripQuizRouteImport.update({
+  id: '/trip-quiz',
+  path: '/trip-quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToursIndexRoute = ToursIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
   '/tours': typeof ToursRouteWithChildren
+  '/trip-planner': typeof TripPlannerRoute
+  '/trip-quiz': typeof TripQuizRoute
   '/tours/$slug': typeof ToursSlugRoute
   '/tours/': typeof ToursIndexRoute
 }
@@ -67,6 +81,8 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
+  '/trip-planner': typeof TripPlannerRoute
+  '/trip-quiz': typeof TripQuizRoute
   '/tours/$slug': typeof ToursSlugRoute
   '/tours': typeof ToursIndexRoute
 }
@@ -77,6 +93,8 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/destinations': typeof DestinationsRoute
   '/tours': typeof ToursRouteWithChildren
+  '/trip-planner': typeof TripPlannerRoute
+  '/trip-quiz': typeof TripQuizRoute
   '/tours/$slug': typeof ToursSlugRoute
   '/tours/': typeof ToursIndexRoute
 }
@@ -88,10 +106,20 @@ export interface FileRouteTypes {
     | '/contact'
     | '/destinations'
     | '/tours'
+    | '/trip-planner'
+    | '/trip-quiz'
     | '/tours/$slug'
     | '/tours/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/destinations' | '/tours/$slug' | '/tours'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/destinations'
+    | '/trip-planner'
+    | '/trip-quiz'
+    | '/tours/$slug'
+    | '/tours'
   id:
     | '__root__'
     | '/'
@@ -99,6 +127,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/destinations'
     | '/tours'
+    | '/trip-planner'
+    | '/trip-quiz'
     | '/tours/$slug'
     | '/tours/'
   fileRoutesById: FileRoutesById
@@ -109,6 +139,8 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DestinationsRoute: typeof DestinationsRoute
   ToursRoute: typeof ToursRouteWithChildren
+  TripPlannerRoute: typeof TripPlannerRoute
+  TripQuizRoute: typeof TripQuizRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -148,6 +180,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToursRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trip-planner': {
+      id: '/trip-planner'
+      path: '/trip-planner'
+      fullPath: '/trip-planner'
+      preLoaderRoute: typeof TripPlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trip-quiz': {
+      id: '/trip-quiz'
+      path: '/trip-quiz'
+      fullPath: '/trip-quiz'
+      preLoaderRoute: typeof TripQuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tours/': {
       id: '/tours/'
       path: '/'
@@ -183,6 +229,8 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DestinationsRoute: DestinationsRoute,
   ToursRoute: ToursRouteWithChildren,
+  TripPlannerRoute: TripPlannerRoute,
+  TripQuizRoute: TripQuizRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

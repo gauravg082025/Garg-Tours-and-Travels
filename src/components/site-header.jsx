@@ -1,9 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+
+
 const links = [
   { to: "/tours", label: "Tours" },
   { to: "/destinations", label: "Destinations" },
+  { to: "/trip-planner", label: "Trip Planner" },
+  { to: "/trip-quiz", label: "Find My Trip" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
